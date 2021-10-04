@@ -104,8 +104,6 @@ spec:
         args:
         - web
         env:
-        - name: SBT_OPTS
-          value: -J-Xmx1g
         - name: KAFKA_BOOTSTRAP_SERVERS
           value: cloudbowl-kafka-bootstrap.kafka:9091
         - name: WEBJARS_USE_CDN
