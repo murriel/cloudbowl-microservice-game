@@ -85,7 +85,7 @@ spec:
         command: ["battle"]
         env:
         - name: KAFKA_BOOTSTRAP_SERVERS
-          value: cloudbowl-kafka-bootstrap.kafka:9092
+          value: cloudbowl-kafka-bootstrap.kafka:9091
 ---
 apiVersion: serving.knative.dev/v1
 kind: Service
@@ -105,7 +105,7 @@ spec:
         - web
         env:
         - name: KAFKA_BOOTSTRAP_SERVERS
-          value: cloudbowl-kafka-bootstrap.kafka:9092
+          value: cloudbowl-kafka-bootstrap.kafka:9091
         - name: WEBJARS_USE_CDN
           valueFrom:
             configMapKeyRef:
