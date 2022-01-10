@@ -44,12 +44,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const instructions = document.getElementById('instructions');
   const maybeUpdatesUrl = body.dataset.updatesurl;
 
-  scoresResetForm.addEventListener('submit', event => {
-    event.preventDefault();
-    const xhr = new XMLHttpRequest();
-    xhr.open('post', scoresResetForm.action);
-    xhr.send();
-  });
+  // scoresResetForm.addEventListener('submit', event => {
+  //   event.preventDefault();
+  //   const xhr = new XMLHttpRequest();
+  //   xhr.open('post', scoresResetForm.action);
+  //   xhr.send();
+  // });
 
   const fixSize = () => {
     if (window.innerWidth > 600) {
@@ -125,17 +125,17 @@ document.addEventListener('DOMContentLoaded', () => {
               }
             }
 
-            if (data.can_reset_in_seconds > 0) {
-              scoresResetImg.title = `You can reset the scores in ${data.can_reset_in_seconds} seconds`;
-              scoresResetImg.disabled = true;
-              scoresResetImg.style.opacity = '0.5';
-              scoresResetImg.style.cursor = 'not-allowed';
-            } else {
-              scoresResetImg.title = `Reset Scores`;
-              scoresResetImg.disabled = false;
-              scoresResetImg.style.opacity = '1';
-              scoresResetImg.style.cursor = 'pointer';
-            }
+            // if (data.can_reset_in_seconds > 0) {
+            //   scoresResetImg.title = `You can reset the scores in ${data.can_reset_in_seconds} seconds`;
+            //   scoresResetImg.disabled = true;
+            //   scoresResetImg.style.opacity = '0.5';
+            //   scoresResetImg.style.cursor = 'not-allowed';
+            // } else {
+            //   scoresResetImg.title = `Reset Scores`;
+            //   scoresResetImg.disabled = false;
+            //   scoresResetImg.style.opacity = '1';
+            //   scoresResetImg.style.cursor = 'pointer';
+            // }
 
             // arena setup
             if (parseInt(arena.dataset.width) !== data.width || parseInt(arena.dataset.height) !== data.height) {
