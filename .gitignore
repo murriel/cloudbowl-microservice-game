@@ -19,3 +19,4 @@ dist
 /conf/generated.keystore
 /kubernetes.yaml
 /.bsp/
+.vscode/settings.json
