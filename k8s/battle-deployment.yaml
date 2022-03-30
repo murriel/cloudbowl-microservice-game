@@ -1,0 +1,25 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: cloudbowl-battle
+  name: cloudbowl-battle
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloudbowl-battle
+  template:
+    metadata:
+      labels:
+        app: cloudbowl-battle
+    spec:
+      containers:
+      - name: cloudbowl-microservice-game
+        image: gcr.io/derrickwong-default/cloudbowl-microservice-game@sha256:3e015ebbc54b3d6810a8d8cd0cf98b3e7ee406a0135b5cf8a28a9a477013a834
+        imagePullPolicy: IfNotPresent
+        command: ["battle"]
+        env:
+        - name: KAFKA_BOOTSTRAP_SERVERS
+          value: cloudbowl-kafka-bootstrap.kafka:9092

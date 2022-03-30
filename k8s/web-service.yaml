@@ -1,0 +1,40 @@
+---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: cloudbowl-web
+spec:
+  template:
+    metadata:
+      name: cloudbowl-web-3e015e
+      annotations:
+        autoscaling.knative.dev/minScale: "1"
+        autoscaling.knative.dev/maxScale: "10"
+    spec:
+      containers:
+      - image: gcr.io/derrickwong-default/cloudbowl-microservice-game@sha256:3e015ebbc54b3d6810a8d8cd0cf98b3e7ee406a0135b5cf8a28a9a477013a834
+        args:
+        - web
+        env:
+        - name: KAFKA_BOOTSTRAP_SERVERS
+          value: cloudbowl-kafka-bootstrap.kafka:9092
+        - name: WEBJARS_USE_CDN
+          valueFrom:
+            configMapKeyRef:
+              key: WEBJARS_USE_CDN
+              name: cloudbowl-config
+        - name: APPLICATION_SECRET
+          valueFrom:
+            configMapKeyRef:
+              key: APPLICATION_SECRET
+              name: cloudbowl-config
+        - name: ADMIN_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: ADMIN_PASSWORD
+              name: cloudbowl-config
+        resources:
+          limits:
+            cpu: "2"
+            memory: 1Gi
+

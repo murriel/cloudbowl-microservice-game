@@ -1,0 +1,128 @@
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: player-update
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: cloudbowl
+spec:
+  partitions: 10
+  replicas: 2
+  config:
+      retention.ms: -1
+      retention.bytes: -1
+---
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: arena-config
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: cloudbowl
+spec:
+  partitions: 10
+  replicas: 2
+  config:
+      retention.ms: -1
+      retention.bytes: -1
+      cleanup.policy: compact
+      delete.retention.ms: 100
+      segment.ms: 100
+---
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: viewer-ping
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: cloudbowl
+spec:
+  partitions: 10
+  replicas: 2
+---
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: arena-update
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: cloudbowl
+spec:
+  partitions: 10
+  replicas: 2
+---
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: scores-reset
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: cloudbowl
+spec:
+  partitions: 10
+  replicas: 2
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: cloudbowl-battle
+  name: cloudbowl-battle
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloudbowl-battle
+  template:
+    metadata:
+      labels:
+        app: cloudbowl-battle
+    spec:
+      containers:
+      - name: cloudbowl-microservice-game
+        image: gcr.io/derrickwong-default/cloudbowl-microservice-game@sha256:3e015ebbc54b3d6810a8d8cd0cf98b3e7ee406a0135b5cf8a28a9a477013a834
+        imagePullPolicy: IfNotPresent
+        command: ["battle"]
+        env:
+        - name: KAFKA_BOOTSTRAP_SERVERS
+          value: cloudbowl-kafka-bootstrap.kafka:9092
+---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: cloudbowl-web
+spec:
+  template:
+    metadata:
+      name: cloudbowl-web-3e015e
+      annotations:
+        autoscaling.knative.dev/minScale: "1"
+        autoscaling.knative.dev/maxScale: "10"
+    spec:
+      containers:
+      - image: gcr.io/derrickwong-default/cloudbowl-microservice-game@sha256:3e015ebbc54b3d6810a8d8cd0cf98b3e7ee406a0135b5cf8a28a9a477013a834
+        args:
+        - web
+        env:
+        - name: KAFKA_BOOTSTRAP_SERVERS
+          value: cloudbowl-kafka-bootstrap.kafka:9092
+        - name: WEBJARS_USE_CDN
+          valueFrom:
+            configMapKeyRef:
+              key: WEBJARS_USE_CDN
+              name: cloudbowl-config
+        - name: APPLICATION_SECRET
+          valueFrom:
+            configMapKeyRef:
+              key: APPLICATION_SECRET
+              name: cloudbowl-config
+        - name: ADMIN_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: ADMIN_PASSWORD
+              name: cloudbowl-config
+        resources:
+          limits:
+            cpu: "2"
+            memory: 1Gi
+
