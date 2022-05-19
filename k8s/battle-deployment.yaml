@@ -17,9 +17,8 @@ spec:
     spec:
       containers:
       - name: cloudbowl-microservice-game
-        image: us-central1-docker.pkg.dev/hackathon-350614/container/cloudbowl-microservice-game:1.4
+        image: us-central1-docker.pkg.dev/hackathon-350614/container/cloudbowl-microservice-game:dea93a0243639ad88962775e48da6b5590c38b8d
         imagePullPolicy: IfNotPresent
-        # command: ["echo","$JAVA_TOOL_OPTIONS"]
         command: ["battle"]
         env:
         - name: KAFKA_BOOTSTRAP_SERVERS
