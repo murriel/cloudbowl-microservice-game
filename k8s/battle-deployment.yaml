@@ -17,9 +17,16 @@ spec:
     spec:
       containers:
       - name: cloudbowl-microservice-game
-        image: gcr.io/derrickwong-default/cloudbowl-microservice-game@sha256:3e015ebbc54b3d6810a8d8cd0cf98b3e7ee406a0135b5cf8a28a9a477013a834
+        image: us-central1-docker.pkg.dev/hackathon-350614/container/cloudbowl-microservice-game:1.4
         imagePullPolicy: IfNotPresent
+        # command: ["echo","$JAVA_TOOL_OPTIONS"]
         command: ["battle"]
         env:
         - name: KAFKA_BOOTSTRAP_SERVERS
-          value: cloudbowl-kafka-bootstrap.kafka:9092
+          value: cloudbowl-kafka-bootstrap.kafka:9091
+        # - name: JAVA_TOOL_OPTIONS
+        #   value: "-Xmx2g -Xss512k -XX:CICompilerCount=2 -Dfile.encoding=UTF-8"
+        resources:
+          requests:
+            cpu: "2"
+            memory: 2Gi
