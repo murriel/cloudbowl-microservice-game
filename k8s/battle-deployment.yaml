@@ -4,6 +4,7 @@ kind: Deployment
 metadata:
   labels:
     app: cloudbowl-battle
+  # name: cloudbowl-battle
   name: cloudbowl-battle
 spec:
   replicas: 1
@@ -17,15 +18,20 @@ spec:
     spec:
       containers:
       - name: cloudbowl-microservice-game
-        image: us-central1-docker.pkg.dev/hackathon-350614/container/cloudbowl-microservice-game:dea93a0243639ad88962775e48da6b5590c38b8d
+        image: us-central1-docker.pkg.dev/hackathon-350614/container/cloudbowl-microservice-game:1.6
         imagePullPolicy: IfNotPresent
         command: ["battle"]
         env:
         - name: KAFKA_BOOTSTRAP_SERVERS
-          value: cloudbowl-kafka-bootstrap.kafka:9091
-        # - name: JAVA_TOOL_OPTIONS
-        #   value: "-Xmx2g -Xss512k -XX:CICompilerCount=2 -Dfile.encoding=UTF-8"
+          value: 34.133.211.208:9094
+          # value: cloudbowl-kafka-bootstrap.kafka:9091
+        - name: JAVA_OPTS
+          value: "-Xmx6g"
         resources:
           requests:
+            cpu: "1"
+            memory: "10Gi"
+          limits:
             cpu: "2"
-            memory: 2Gi
+            memory: "10Gi"
+          
