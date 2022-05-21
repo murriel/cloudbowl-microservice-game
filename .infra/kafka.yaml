@@ -7,10 +7,10 @@ spec:
     version: 2.6.0
     replicas: 3
     listeners:
-    - name: external
-      port: 9094
-      tls: false
-      type: loadbalancer
+#    - name: external
+#      port: 9094
+#      tls: false
+#      type: loadbalancer
     - name: plain
       port: 9092
       type: internal

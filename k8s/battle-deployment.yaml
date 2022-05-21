@@ -24,7 +24,8 @@ spec:
         env:
         - name: KAFKA_BOOTSTRAP_SERVERS
 #          value: 34.133.211.208:9094
-          value: cloudbowl-kafka-external-bootstrap.kafka:9094
+#          value: cloudbowl-kafka-external-bootstrap.kafka:9094
+          value: cloudbowl-kafka-bootstrap.kafka:9092
         - name: JAVA_OPTS
           value: "-Xmx6g"
         resources:
