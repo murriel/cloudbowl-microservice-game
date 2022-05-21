@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloudbowl-config
+  namespace: default
+data:
+  ADMIN_PASSWORD: P@ssw0rd
+  APPLICATION_SECRET: b49pJzPluOyhjlxToFSnZczyV+LCbi3OdaNv1QYh6v4=
+  WEBJARS_USE_CDN: "true"
