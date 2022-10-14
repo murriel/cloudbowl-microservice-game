@@ -1,4 +1,4 @@
-apiVersion: kafka.strimzi.io/v1beta1
+apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
   name: player-update
@@ -12,7 +12,7 @@ spec:
     retention.ms: -1
     retention.bytes: -1
 ---
-apiVersion: kafka.strimzi.io/v1beta1
+apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
   name: arena-config
@@ -26,7 +26,7 @@ spec:
     retention.ms: -1
     retention.bytes: -1
 ---
-apiVersion: kafka.strimzi.io/v1beta1
+apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
   name: viewer-ping
@@ -39,7 +39,7 @@ spec:
   config:
     retention.ms: 60000
 ---
-apiVersion: kafka.strimzi.io/v1beta1
+apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
   name: arena-update
@@ -52,7 +52,7 @@ spec:
   config:
     retention.ms: 60000
 ---
-apiVersion: kafka.strimzi.io/v1beta1
+apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
   name: scores-reset

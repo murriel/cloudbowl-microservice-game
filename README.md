@@ -60,7 +60,7 @@ document.body.dataset.paused = true;
     gcloud services enable compute.googleapis.com container.googleapis.comcontainer.googleapis.com containerregistry.googleapis.com cloudbuild.googleapis.com
 
     gcloud config set compute/region us-central1
-    gcloud config set container/cluster cloudbowl
+    gcloud config set container/cluster cloudbowl-v2
 
     gcloud container clusters create \
       --region=$(gcloud config get-value compute/region) \
@@ -104,9 +104,25 @@ document.body.dataset.paused = true;
       WEBJARS_USE_CDN: 'true'
       APPLICATION_SECRET: $APPLICATION_SECRET
       ADMIN_PASSWORD: $ADMIN_PASSWORD
-    EOF
+    EOF 
     ```
 1. Setup Cloud Build with a trigger on master, excluding `samples/**`, with Configuration Type set to *Cloud Build configuration file*, and substitution vars `_CLOUDSDK_COMPUTE_REGION` and `_CLOUDSDK_CONTAINER_CLUSTER`.  Running the trigger will create the Kafka topics, deploy the battle service, and the web app.
+
+- Go to Cloud Build Dashboard
+- Create Trigger
+- Select region 
+- Event: Push to a branch
+- Source: Repository - connect to the cloudbowl repository 
+    [go through process of connecting to repository]
+    Select source
+    authenticate
+    Select repository 
+    Connect
+
+
+for the subs variables enter your region and cluster name for the values 
+
+
 1. Once the service is deployed, setup the domain name:
     ```
     export IP_ADDRESS=$(kubectl get svc istio-ingress -n gke-system -o 'jsonpath={.status.loadBalancer.ingress[0].ip}')
